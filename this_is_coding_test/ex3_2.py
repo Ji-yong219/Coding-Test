@@ -15,3 +15,17 @@ def main():
             result += first
 
     return result
+
+def main():
+    result = 0
+
+    n, m, k = map(int, input().split())
+    data = [int(i) for i in input().split(" ")]
+    data.sort()
+
+    first = data[n-1]
+    second = data[n-2]
+
+    result = (first*k + second) * (m // (k+1)) + (first * (m % (k+1)))
+
+    return result
