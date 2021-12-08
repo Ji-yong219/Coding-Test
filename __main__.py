@@ -4,6 +4,6 @@ from this_is_coding_test.ex3_2 import main
 if __name__ == "__main__":
     start = time()
 
-    print( main() )
+    print(main())
 
-    print(f"progress time : {time() - start}")
+    print(f"progress time : {time() - start}s")
