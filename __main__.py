@@ -1,5 +1,6 @@
 from datetime import datetime
-from this_is_coding_test.ex3_2 import main
+# from this_is_coding_test.ex3_2 import main
+from baekjoon.samsung_sw import main
 
 if __name__ == "__main__":
     start = datetime.now()
