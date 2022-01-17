@@ -93,7 +93,7 @@ def main(r, C, map):
 
         map2 = [_[:] for _ in map]
 
-        data = incline(map2, x, y, R, B, O)
+        data = incline(map2, N, M, x, y, R, B, O)
         # print(f"data : {data}")
 
         new_R, new_B = data[:2]
@@ -146,11 +146,7 @@ def main(r, C, map):
 
     return result
 
-def incline(map, dx, dy, R, B, O):
-    global N
-    global M
-    global next_goal
-
+def incline(map, N, M, dx, dy, R, B, O):
     iter1, iter2 = None, None
 
     h, v = False, False
@@ -251,3 +247,8 @@ def incline(map, dx, dy, R, B, O):
 
     # print("after", R, B)
     return R, B, O
+
+if __name__ == "__main__":
+    N, M = map(int, input().split(" "))
+    data = [list(input()) for _ in range(N)]
+    main(N, M, data)
