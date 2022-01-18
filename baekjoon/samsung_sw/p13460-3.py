@@ -1,10 +1,11 @@
 from collections import deque
 
 def isPossible(map, R, B, dx, dy):
-    (x1, y1), (x2, y2) = R, B
+    x1, y1 = R
+    x2, y2 = B
     
-    nx1, ny1 = x1+dx, y1+dy
-    nx2, ny2 = x2+dx, y2+dy
+    nx1, ny1 = x1 + dx, y1 + dy
+    nx2, ny2 = x2 + dx, y2 + dy
 
     if map[ny1][nx1] in [".", "O"] or map[ny2][nx2] in [".", "O"]:
         return True
@@ -19,7 +20,7 @@ def main(N, M, map):
     result = []
     visited = set()
 
-    R, B, O = [None for _ in range(3)]
+    x, y, R, B, O, new_R, new_B = [None for _ in range(7)]
 
     for i in range(N):
         if R and B and O:
@@ -28,11 +29,9 @@ def main(N, M, map):
         for j in range(M):
             if map[i][j] == "R":
                 R = (j, i)
-                map[i][j] = "."
 
             elif map[i][j] == "B":
                 B = (j, i)
-                map[i][j] = "."
 
             elif map[i][j] == "O":
                 O = (j, i)
@@ -40,25 +39,54 @@ def main(N, M, map):
             if R and B and O:
                 break
 
-    dq.append((R, B, 0))
+    visited.add((R, B))
+
+    for i in range(4):
+        if isPossible(map, R, B, dx[i], dy[i]):
+            dq.append( (dx[i], dy[i], R, B, 1) )
 
     while dq:
-        R1, B1, cnt = dq.popleft()
+        x, y, R, B, cnt = dq.popleft()
 
-        if R1 == O and R1 != B1:
+        if new_R:
+            map[new_R[1]][new_R[0]] = "."
+            map[new_B[1]][new_B[0]] = "."
+
+            map[R[1]][R[0]] = "R"
+            map[B[1]][B[0]] = "B"
+
+            map[O[1]][O[0]] = "O"
+
+        data = incline(map, N, M, x, y, R, B, O)
+
+        new_R, new_B = data[:2]
+
+        if (new_R, new_B) in visited or cnt>10:
+            continue
+
+        print(x, y, R, B, cnt)
+        print()
+
+        if new_R == O and new_R != new_B:
             result.append(cnt)
             continue
 
-        if cnt >= 10:
-            continue
+        map[R[1]][R[0]] = "."
+        map[B[1]][B[0]] = "."
+
+        map[new_R[1]][new_R[0]] = "R"
+        map[new_B[1]][new_B[0]] = "B"
+
+        map[O[1]][O[0]] = "O"
+
+        R, B = new_R, new_B
 
         for i in range(4):
-            if isPossible(map, R1, B1, dx[i], dy[i]):
-                R2, B2 = incline(map, N, M, dx[i], dy[i], R1, B1, O)
+            if (dx[i], dy[i], R, B) not in dq:
+                if isPossible(map, R, B, dx[i], dy[i]):
+                    dq.append( (dx[i], dy[i], R, B, cnt+1) )
 
-                if  (R2, B2) not in visited:
-                    dq.append( (R2, B2, cnt+1) )
-                    visited.add( (R2, B2) )
+        visited.add( data[:2] )
 
     result = min(result) if result else -1
     return -1 if result > 10 else result
@@ -93,29 +121,35 @@ def incline(map, N, M, dx, dy, R, B, O):
             if l == goal and now in ["."]:
                 next_goal = c
 
-            if (prv == "#" or l in [R, B]) and now in ["."] and c not in [R, B]:
+            if prv in ["#", "R", "B"] and now in ["."]:
                 goal = c
 
             if now == "O":
                 goal = c
 
-            elif c == R and goal and prv != "#" and l not in [R, B]:
+            elif now == "R" and goal and prv in [".", "O"]:
                 R = goal
+                map[goal[1]][goal[0]] = now
+                map[c[1]][c[0]] = "."
 
                 if goal == O:
+                    map[goal[1]][goal[0]] = "O"
                     next_goal = O
 
                 goal = next_goal
 
-            elif c == B and goal and prv != "#" and l not in [R, B]:
+            elif now == "B" and goal and prv in [".", "O"]:
                 B = goal
+                map[goal[1]][goal[0]] = now
+                map[c[1]][c[0]] = "."
 
                 if goal == O:
+                    map[goal[1]][goal[0]] = "O"
                     next_goal = O
 
                 goal = next_goal
 
-    return R, B
+    return R, B, O
 
 N, M = map(int, input().split(" "))
 data = [list(input()) for _ in range(N)]

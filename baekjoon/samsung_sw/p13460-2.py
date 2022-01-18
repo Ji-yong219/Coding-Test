@@ -126,7 +126,8 @@ def main(r, C, map):
 
             if data and data[:2] not in visited:
                 if (dx[i], dy[i], R, B) not in dq:
-                    dq.append( (dx[i], dy[i], R, B, cnt+1) )
+                    if isPossible(map, R, B, dx[i], dy[i]):
+                        dq.append( (dx[i], dy[i], R, B, cnt+1) )
 
 
         visited.add( data[:2] )
@@ -145,32 +146,28 @@ def main(r, C, map):
 def incline(map, N, M, dx, dy, R, B, O):
     iter1, iter2 = None, None
 
-    h, v = False, False
+    v = False
 
     next_goal = None
 
-    R2, B2 = R, B
-
     drc = None
     if dy == -1:
-        iter1 = range(0, N)
-        iter2 = range(0, M)
+        iter1 = range(N)
+        iter2 = range(M)
         v = True
         drc = "↑"
     elif dy == 1:
         iter1 = range(N-1, -1, -1)
-        iter2 = range(0, M-1)
+        iter2 = range(M)
         v = True
         drc = "↓"
     elif dx == -1:
-        iter1 = range(0, N)
-        iter2 = range(0, M)
-        h = True
+        iter1 = range(N)
+        iter2 = range(M)
         drc = "←"
     elif dx == 1:
-        iter1 = range(0, N)
+        iter1 = range(N)
         iter2 = range(M-1, -1, -1)
-        h = True
         drc = "→"
 
     print(drc, "before", R, B, end="\t")
@@ -179,18 +176,11 @@ def incline(map, N, M, dx, dy, R, B, O):
         iter1, iter2 = iter2, iter1
 
     for i in iter1:
-        l, c = None, None
-        prv, now = None, None
-
-        goal = None
+        l, c, prv, now, goal = [None for _ in range(5)]
 
         for j in iter2:
             l = c
-
-            if v:
-                c = (i, j)
-            else:
-                c = (j, i)
+            c = (i, j) if v else (j, i)
 
             if l:
                 prv = map[l[1]][l[0]]
@@ -227,19 +217,13 @@ def incline(map, N, M, dx, dy, R, B, O):
 
                 goal = next_goal
 
+            if R == B == O:
+                return R, B, O
+
             # printBoard(map)
                 
         # print("\n\n")
         # break
-
-
-    map[R[1]][R[0]] = "."
-    map[B[1]][B[0]] = "."
-
-    map[R2[1]][R2[0]] = "R"
-    map[B2[1]][B2[0]] = "B"
-
-    map[O[1]][O[0]] = "O"
 
     print("after", R, B)
     return R, B, O
