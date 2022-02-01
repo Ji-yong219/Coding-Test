@@ -5,7 +5,7 @@ def main(N, map):
     dx = [1, -1, 0, 0]
     dy = [0, 0, 1, -1]
 
-    return "hi"
+    return "hello world"
 
     # for i in range(4):
     #     dx[i], dy[i]
