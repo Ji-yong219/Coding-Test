@@ -1,6 +1,7 @@
 from collections import deque
 
 def main(N, map):
+    print("test print")
     dq = deque()
     dx = [1, -1, 0, 0]
     dy = [0, 0, 1, -1]
