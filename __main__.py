@@ -6,8 +6,8 @@ if __name__ == "__main__":
     start = datetime.now()
 
     N = map(int, input())
-    data = [list(input()) for _ in range(N)]
+    # data = [list(input()) for _ in range(N)]
 
-    print( main(N, data) )
+    print( main(N) )
 
     print(f"progress time : {datetime.now() - start}s")
