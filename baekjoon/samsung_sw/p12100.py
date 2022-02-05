@@ -1,12 +1,12 @@
 from collections import deque
 
-def main(N):
+def main(N, data):
     print("test print")
     dq = deque()
     dx = [1, -1, 0, 0]
     dy = [0, 0, 1, -1]
 
-    return "hello world"
+    return data
 
     # for i in range(4):
     #     dx[i], dy[i]

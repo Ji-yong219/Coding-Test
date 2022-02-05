@@ -5,9 +5,9 @@ from baekjoon.samsung_sw import main
 if __name__ == "__main__":
     start = datetime.now()
 
-    N = map(int, input())
-    # data = [list(input()) for _ in range(N)]
+    N = int( input() )
+    data = [list(map(int, input().split(" "))) for _ in range(N)]
 
-    print( main(N) )
+    print( main(N, data) )
 
     print(f"progress time : {datetime.now() - start}s")
