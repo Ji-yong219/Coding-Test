@@ -1,43 +1,50 @@
 from collections import deque
     
-def main(N, apple_data, direction_data):
+def main(N, M, paper):
     dq = deque()
-    dd = ((1, 0), (0, 1), (-1, 0), (0, -1))
-    idx, sec, y, x = 0, 0 ,0, 0
+    dx = [1, -1, 0, 0]
+    dy = [0, 0, 1, -1]
+    exists = []
+    visited = set()
+    result = 0
 
-    while True:
-        sec += 1
+    visited.add((0, 0))
 
-        dq.append((y, x))
+    for i in range(N):
+        for j in range(M):
+            dq.append((i, j, {(i, j)}))
+            visited = set()
 
-        x += dd[idx][0]
-        y += dd[idx][1]
+            while dq:
+                y, x, visited = dq.popleft()
 
-        if not (-1 < y < N) or not (-1 < x < N) or (y, x) in dq:
-            break
+                if len(visited) >= 4:
+                    exists.append( visited )
+                    temp = sum([paper[y][x] for y,x in tuple(visited)])
+                    if result < temp:
+                        result = temp
 
-        elif (y+1, x+1) in apple_data:
-            del apple_data[ apple_data.index((y+1, x+1)) ]
-        
-        else:
-            dq.popleft()
-        
-        if direction_data and sec == int(direction_data[0][0]):
-            _, d = direction_data.pop(0)
+                    visited = set()
+                    continue
 
-            if d == "L":
-                idx = (idx-1) % 4
+                for k in range(4):
+                    nx, ny = dx[k], dy[k]
+                    target = ((y+ny), (x+nx))
 
-            elif d == "D":
-                idx = (idx+1) % 4
+                    if (0 <= (y+ny) < N ) and (0 <= (x+nx) < M) and target not in visited:
+                        temp = visited.copy()
+                        temp.add(target)
 
-    return sec
+                        if  temp not in exists:
+                            visited.add( target )
+                            dq.append( (target[0], target[1], visited.copy()) )
+
+    for r in exists:
+        print(r)
+    return result
 
 if __name__ == "__main__":
-    N = int( input() )
-    AN = int( input() )
-    apple_data = [tuple(map(int, input().split(" "))) for _ in range(AN)]
-    DN = int( input() )
-    direction_data = [input().split(" ") for _ in range(DN)]
+    N, M = tuple( map(int, input().split(" ") ) )
+    paper = [ list(map(int, input().split(" "))) for _ in range(N)]
 
-    print( main(N, apple_data, direction_data) )
+    print( main(N, M, paper) )
