@@ -12,60 +12,46 @@ def main(N, M, paper):
     dq.append((0, 0, deque( {(0, 0)} )))
     visited = deque([(0, 0)])
 
-    result = DFS(0, 0, visited, result)
-    return result
-
     for i in range(N):
         for j in range(M):
-            dq.append((i, j, deque( {(i, j)} )))
+            dq.append( (i, j, deque( {(i, j)} )) )
             visited = deque([(i, j)])
-
-            result = DFS(dq)
-            continue
 
             while dq:
                 y, x, visited = dq.pop()
 
-                print(f"y : {y}, x : {x}\tvisited : {visited}")
-                printBoard(N, M, tuple(visited))
-                print("-"*30)
+                # print(f"y : {y}, x : {x}\tvisited : {visited}")
+                # printBoard(N, M, tuple(visited))
+                # print("-"*30)
                 if len(visited) >= 4:
-                    # print(f"y : {y}, x : {x}\tvisited : {visited}")
-                    # printBoard(N, M, tuple(visited))
-                    # print("-"*30)
-                    print("this")
+                    print(f"y : {y}, x : {x}\tvisited : {visited}")
+                    printBoard(N, M, tuple(visited))
                     print("-"*30)
+                    # print("this")
+                    # print("-"*30)
                     temp = sum([paper[yy][xx] for yy,xx in tuple(visited)])
                     if result < temp:
                         result = temp
 
-                    # visited = deque([(y, x)])
                     # visited.popleft()
                     # continue
-                    visited.pop()
-                    y, x = visited[-1]
+                    # visited.pop()
+                    # y, x = visited[-1]
 
                 for k in range(4):
-                    # if len(visited) >= 4:
-                    #     visited.popleft()
-                    #     y, x = visited[0]
-
                     nx, ny = dx[k], dy[k]
                     target = ((y+ny), (x+nx))
 
                     if (0 <= target[0] < N ) and (0 <= target[1] < M) and target not in visited:
 
-                        if len(visited)==3 and (sum([paper[yy][xx] for yy,xx in tuple(visited)]) + paper[target[0]][target[1]]) < result:
-                            continue
-
                         if len(visited) < 4:
                             visited.append(target)
-                            if set(visited) not in exists:
+                            if (set(visited)) not in exist:
                                 dq.append( (target[0], target[1], visited.copy()) )
-                                exists.append( set(visited) )
 
                             if len(visited) >= 4:
                                 visited.pop()
+                                exist.append( set(visited) )
 
     return result
 
