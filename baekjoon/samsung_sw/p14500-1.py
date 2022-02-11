@@ -1,5 +1,4 @@
 from collections import deque
-from genericpath import exists
     
 def main(N, M, paper):
     global exist
