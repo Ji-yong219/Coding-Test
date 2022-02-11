@@ -28,30 +28,26 @@ def DFS(y, x, visited, result):
         if result < temp:
             result = temp
 
-        # visited = deque([(y, x)])
         visited.popleft()
 
-    # print(f"y : {y}, x : {x}\tvisited : {visited}")
-    # printBoard(N, M, tuple(visited))
-    # print("-"*30)
+    for y, x in list(visited):
+        for k in range(4):
+            nx, ny = dx[k], dy[k]
+            target = ((y+ny), (x+nx))
 
-    for k in range(4):
-        nx, ny = dx[k], dy[k]
-        target = ((y+ny), (x+nx))
+            if (0 <= target[0] < N ) and (0 <= target[1] < M) and target not in visited:
 
-        if (0 <= target[0] < N ) and (0 <= target[1] < M) and target not in visited:
+                # if len(visited)==3 and (sum([paper[yy][xx] for yy,xx in tuple(visited)]) + paper[target[0]][target[1]]) < result:
+                #     continue
 
-            # if len(visited)==3 and (sum([paper[yy][xx] for yy,xx in tuple(visited)]) + paper[target[0]][target[1]]) < result:
-            #     continue
+                if len(visited) < 4:
+                    visited.append(target)
+                    if set(visited) not in exist:
+                        exist.append( set(visited) )
+                        result = DFS( target[0], target[1], visited.copy(), result )
 
-            if len(visited) < 4:
-                visited.append(target)
-                if set(visited) not in exist:
-                    exist.append( set(visited) )
-                    result = DFS( target[0], target[1], visited.copy(), result )
-
-                    if len(visited) >= 4:
-                        visited.pop()
+                        if len(visited) >= 4:
+                            visited.pop()
 
     return result
 
