@@ -1,6 +1,8 @@
 def main(N, plan):
     result = 0
 
+    print(f"N : {N}\tplan : {plan}")
+
     return result
 
 if __name__ == "__main__":
