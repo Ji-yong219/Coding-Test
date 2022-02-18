@@ -3,6 +3,9 @@ def main(N, plan):
 
     print(f"N : {N}\tplan : {plan}")
 
+    for _ in range(5):
+        result += 1
+
     return result
 
 if __name__ == "__main__":
