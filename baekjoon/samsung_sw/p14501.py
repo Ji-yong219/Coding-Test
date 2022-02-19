@@ -3,8 +3,9 @@ def main(N, plan):
 
     print(f"N : {N}\tplan : {plan}")
 
-    for _ in range(5):
-        result += 1
+    for _ in range(N):
+        for p in plan:
+            print(p)
 
     return result
 
