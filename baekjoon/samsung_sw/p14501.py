@@ -1,8 +1,8 @@
 def main(plan):
     result = 0
 
-    for p in plan:
-        print(p)
+    for day, (T, P) in enumerate(plan, 1):
+        print(day, T, P)
 
     return result
 
