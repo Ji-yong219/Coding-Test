@@ -5,12 +5,10 @@ def main(N, plan):
     visited = ()
 
     dq = deque([0])
-    cnt = 0
     while dq:
         i = dq[-1] + plan[dq[-1]][0]
 
         while i < N:
-            cnt += 1
             if i + plan[i][0] > N:
                 i += 1
                 continue
@@ -21,9 +19,10 @@ def main(N, plan):
                 dq.append(i)
                 i += plan[i][0]
                 continue
+
             i += 1
 
-        visited += (tuple(dq),)
+        visited += (tuple(dq), )
         result = max(result, sum([plan[ii][1] for ii in dq]))
         dq.pop()
 
