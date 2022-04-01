@@ -5,7 +5,7 @@ def main(N, plan):
     visited = ()
 
     dq = deque( [0] )
-    while dq:
+    while dq: 
         i = dq[-1] + plan[dq[-1]][0]
         sm = plan[dq[-1]][1]
     
@@ -16,7 +16,7 @@ def main(N, plan):
 
             temp = tuple(dq)
 
-            if temp + (i,) not in visited:
+            if temp + (i, ) not in visited:
                 dq.append(i)
                 print(plan)
                 i += plan[i][0]
