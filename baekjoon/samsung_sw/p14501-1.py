@@ -23,7 +23,7 @@ def main(N, plan):
                 sm += plan[i][1]
                 continue
 
-            i += 1
+            # i += 1
 
         visited += (tuple(dq), )
         result = max(result, sm)
