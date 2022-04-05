@@ -18,12 +18,11 @@ def main(N, plan):
 
             if temp + (i, ) not in visited:
                 dq.append(i)
-                print(plan)
-                i += plan[i][0]
                 sm += plan[i][1]
+                i += plan[i][0]
                 continue
 
-            # i += 1
+            i += 1
 
         visited += (tuple(dq), )
         result = max(result, sm)
