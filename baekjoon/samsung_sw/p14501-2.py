@@ -5,7 +5,7 @@ def main(N, plan):
 
     for i in range(N-1, -1, -1):
         d = i + plan[i][0]
-        if d < N:
+        if d <= N:
             cost[i] = max(cost[i+1], cost[d] + plan[i][1])
         else:
             cost[i] = cost[i+1]
