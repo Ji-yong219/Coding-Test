@@ -1,5 +1,5 @@
 from collections import deque
-from itertools import permutations
+from itertools import combinations
 
 def bfs(N, M, data, viruses):
     visited = set()
@@ -25,7 +25,6 @@ def bfs(N, M, data, viruses):
     return len(visited)
 
 
-
 def main(N, M, data):
     result = 0
     whole_count = 0
@@ -41,7 +40,8 @@ def main(N, M, data):
             elif data[y][x] == 2:
                 viruses.append((y, x))
 
-    walls = tuple(permutations(blanks, 3))
+    whole_count -= 3
+    walls = tuple(combinations(blanks, 3))
 
     for wall in walls:
         for w in wall:
