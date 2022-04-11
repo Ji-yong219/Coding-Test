@@ -1,7 +1,8 @@
 from collections import deque
+from itertools import permutations
 
 def bfs(N, M, data, viruses):
-    visited = []
+    visited = set()
 
     dx = [0, 1, 0, -1]
     dy = [1, 0, -1, 0]
@@ -18,7 +19,7 @@ def bfs(N, M, data, viruses):
 
                 if (0 <= ny < N) and (0 <= nx < M):
                     if data[ny][nx] == 0 and (ny, nx) not in visited:
-                        visited.append((ny, nx))
+                        visited.add((ny, nx))
                         dq.append((ny, nx))
 
     return len(visited)
@@ -29,23 +30,27 @@ def main(N, M, data):
     result = 0
     whole_count = 0
     viruses = []
-    walls = []
+    blanks = []
 
     for y in range(N):
         for x in range(M):
             if data[y][x] == 0:
-                # if len(walls) < 3:
-                #     walls.append((y, x))
-                #     data[y][x] = 1
-                # else:
+                blanks.append((y, x))
                 whole_count += 1
 
             elif data[y][x] == 2:
                 viruses.append((y, x))
 
-    result = whole_count - bfs(N, M, data, viruses)
+    walls = tuple(permutations(blanks, 3))
 
-    print(whole_count, result)
+    for wall in walls:
+        for w in wall:
+            data[w[0]][w[1]] = 1
+            
+        result = max(result, whole_count - bfs(N, M, data, viruses))
+
+        for w in wall:
+            data[w[0]][w[1]] = 0
 
     return result
 
