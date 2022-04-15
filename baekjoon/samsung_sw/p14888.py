@@ -1,6 +1,17 @@
 def main(N, data):
-    result = 0
-    print(N, data)
+    # result = 0
+    a = permutations([1,2,3,], 2)
+    print(a)
+
+def permutations(arr, n):
+    result = []
+    if n == 0:
+        return [[]]
+
+    for i, el in enumerate(arr):
+        for p in permutations(arr[:i] + arr[i+1:], n-1):
+            result += [[el] + p]
+
     return result
 
 if __name__ == "__main__":
