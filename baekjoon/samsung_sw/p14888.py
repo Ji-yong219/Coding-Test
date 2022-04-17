@@ -4,6 +4,8 @@ def main(N, AN, ON):
     oo = [1] * ON[0] + [2] * ON[1] + [3] * ON[2] + [4] * ON[3]
     operators = permutations(oo, N-1)
     
+    print(len(operators))
+
     mx = None
     mn = None
     for operator in operators:
@@ -21,9 +23,9 @@ def main(N, AN, ON):
         if mx is None:
             mx, mn = temp, temp
 
-        elif mx < temp:
+        if mx < temp:
             mx = temp
-        elif mn > temp:
+        if mn > temp:
             mn = temp
 
     result = f"{mx}\n{mn}"
