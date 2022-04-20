@@ -2,8 +2,7 @@ def main(N, AN, ON):
     result = 0
 
     oo = [1] * ON[0] + [2] * ON[1] + [3] * ON[2] + [4] * ON[3]
-    # operators = permutations(oo, N-1)
-    operators = combinations(oo, N-1)
+    operators = permutations(oo, N-1))
 
     mx = None
     mn = None
@@ -17,7 +16,7 @@ def main(N, AN, ON):
             elif o == 3:
                 temp *= a
             elif o == 4:
-                temp //= a
+                temp = abs(temp) // a
         
         if mx is None:
             mx, mn = temp, temp
@@ -26,7 +25,7 @@ def main(N, AN, ON):
             mx = temp
         if mn > temp:
             mn = temp
-
+        
     result = f"{mx}\n{mn}"
 
     return result
@@ -39,17 +38,6 @@ def permutations(arr, n):
     for i, el in enumerate(arr):
         for p in permutations(arr[ :i] + arr[i+1: ], n-1):
             result += [[el] + p]
-
-    return result
-
-def combinations(arr, n):
-    result = []
-    if n == 0:
-        return [[]]
-
-    for i, el in enumerate(arr):
-        for c in combinations(arr[i+1: ], n-1):
-            result += [[el] + c]
 
     return result
 
