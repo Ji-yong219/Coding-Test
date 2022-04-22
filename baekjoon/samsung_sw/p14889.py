@@ -1,16 +1,12 @@
 def main(N, S):
     result = 10e8
-    # visited = []
 
     temp = [i for i in range(1, N+1)]
-    com = combinations(temp, N/2)
+    com = combinations(temp, N//2)
     temp = set(temp)
 
     for start in com:
         link = list( temp - set(start) )
-
-        # if set(start) in visited:
-        #     continue
 
         sum_start = 0
         for i, j in combinations(start, 2):
@@ -28,9 +24,6 @@ def main(N, S):
 
         if result == 0:
             break
-
-        # visited.append(set(start))
-        # visited.append(set(link))
 
     return result
 
