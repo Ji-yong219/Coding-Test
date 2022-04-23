@@ -2,62 +2,43 @@ def main(gears, K, turns, indexs):
     result = 0
 
     for g, d in turns:
-        # print(gears)
-        # print(indexs)
-        # print(g, d)
-        if d:
-            for i in range(2):
-                indexs[g-1][i] += 1
-
-        else:
+        axis = [i[:] for i in indexs]
+        
+        if d == 1:
             for i in range(2):
                 indexs[g-1][i] -= 1
 
-        # print("↓")
+        else:
+            for i in range(2):
+                indexs[g-1][i] += 1
 
-        # print(gears)
-        # print(indexs)
-        # print(g, d)
-        # break
-
-        for idx in range(g-1, -1, -1):
-            # 극이 같을 때
-            if gears[idx][ indexs[idx][1] %8 ] == gears[idx+1][ indexs[idx+1][0] %8 ]:
+        for idx in range(g-2, -1, -1):
+            d = -d
+            if gears[idx][ axis[idx][1] %8 ] == gears[idx+1][ axis[idx+1][0] %8 ]:
                 break
             else:
-                if d:
+                if d == 1:
                     for i in range(2):
                         indexs[idx][i] -= 1
                 else:
                     for i in range(2):
                         indexs[idx][i] += 1
                         
-        for idx in range(g+1, 4):
+        for idx in range(g, 4):
+            d = -d
             # 극이 같을 때
-            if gears[idx][ indexs[idx][1] %8 ] == gears[idx-1][ indexs[idx-1][0] %8 ]:
+            if gears[idx-1][ axis[idx-1][1] %8 ] == gears[idx][ axis[idx][0] %8 ]:
                 break
             else:
-                if d:
+                if d == 1:
                     for i in range(2):
                         indexs[idx][i] -= 1
                 else:
                     for i in range(2):
                         indexs[idx][i] += 1
 
-        for idx in range(4):
-            v = gears[idx][ (indexs[idx][0]+2) %8 ]
-            if v == 0:
-                if idx == 0:
-                    result += 1
-                elif idx == 1:
-                    result += 2
-                elif idx == 2:
-                    result += 4
-                elif idx == 3:
-                    result += 8
-
-    # for g, i in zip(gears, indexs):
-    #     print(g, i)
+    result = "".join( [str( gears[i][ (indexs[i][0]+2) %8 ]) for i in range(4)] )[::-1]
+    result = int(result, 2)
 
     return result
 
