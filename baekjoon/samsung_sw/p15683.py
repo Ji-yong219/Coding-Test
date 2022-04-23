@@ -1,11 +1,13 @@
-def main(gears, K, turns):
+def main(N, M, data):
     result = 0
+
+    print(N, M)
+    print(data)
 
     return result
 
 if __name__ == "__main__":
-    gears = [list(map(int, list(input()))) for _ in range(4)]
-    K = int(input())
-    turns = [tuple(map(int, input().split(" "))) for _ in range(K)]
+    N, M = tuple(map(int, input().split(" ")))
+    data = [list(map(int, input().split(" "))) for _ in range(N)]
 
-    print( main(gears, K, turns) )
+    print( main(N, M, data) )
