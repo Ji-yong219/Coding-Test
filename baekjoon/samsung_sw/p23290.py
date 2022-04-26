@@ -21,90 +21,102 @@ def main(M, S, data, Sx, Sy):
         data2 = [i.copy() for i in data]
 
         # 물고기 이동
-        for idx, (Fx, Fy, Fd) in enumerate(data):
-            for _ in range(8):
+        for idx, (Fy, Fx, Fd) in enumerate(data):
+            for i in range(8):
                 ny = (Fy-1) + dy[Fd-1 %8]
                 nx = (Fx-1) + dx[Fd-1 %8]
 
-                if (0 <= ny < 4) and (0 <= nx <= 4):
-                    if ny != Sy-1 and nx != Sx:
+                if (0 <= ny < 4) and (0 <= nx < 4):
+                    if ny != Sy-1 or nx != Sx-1:
                         for y, x, _ in smells:
-                            if (y, x) == (ny, nx):
+                            if (y-1, x-1) == (ny, nx):
                                 break
                         
                         else:
                             grid[Fy-1][Fx-1] -= 1
                             grid[ny][nx] += 1
-                            data[idx] = [nx+1, ny+1, Fd]
+                            data[idx] = [ny+1, nx+1, Fd]
                             break
-
                 Fd -= 1
 
         # 상어 이동
-        suc = False
-        temp = Sy, Sx
         routes = []
-
-        cnts = [10e4] * 4
+        cnts = []
         for d in range(4):
             ny = Sy + sdy[d]
             nx = Sx + sdx[d]
 
             if (0 <= ny < 4) and (0 <= nx < 4):
-                cnts[d] = grid[ny][nx]
+                cnts.append((d+1, grid[ny][nx]))
             
-            
-        temp = Sy, Sx
-        for a in [d for d in range(4) if cnts[d] == min(cnts)]:
-            cnts2 = [10e4] * 4
-            for d in range(4):
-                ny = Sy + sdy[d]
-                nx = Sx + sdx[d]
+        print(f"zz : {[r[0] for r in cnts if r[1] == max([t[1] for t in cnts])]}")
+        for a in [r[0] for r in cnts if r[1] == max([t[1] for t in cnts])]:
+            cnts2 = []
+            for d2 in range(4):
+                ny2 = Sy + sdy[d2]
+                nx2 = Sx + sdx[d2]
 
-                if (0 <= ny < 4) and (0 <= nx < 4):
-                    cnts2[d] = grid[ny][nx]
+                if (0 <= ny2 < 4) and (0 <= nx2 < 4):
+                    cnts2.append((d2+1, grid[ny2][nx2]))
 
-            temp2 = Sy, Sx
-            for b in [d for d in range(4) if cnts2[d] == min(cnts2)]:
-                cnts3 = [10e4] * 4
-                for d in range(4):
-                    ny = Sy + sdy[d]
-                    nx = Sx + sdx[d]
+            for b in [r[0] for r in cnts2 if r[1] == max([t[1] for t in cnts2])]:
+                cnts3 = []
+                for d3 in range(4):
+                    ny3 = Sy + sdy[d3]
+                    nx3 = Sx + sdx[d3]
 
-                    if (0 <= ny < 4) and (0 <= nx < 4):
-                        cnts3[d] = grid[ny][nx]
-            
-                temp3 = Sy, Sx            
-                for c in [d for d in range(4) if cnts3[d] == min(cnts3)]:
-                    routes.append( f"{(a+1)}{b+1}{c+1}" )
+                    if (0 <= ny3 < 4) and (0 <= nx3 < 4):
+                        cnts3.append((d3+1, grid[ny3][nx3]))
 
-                Sy, Sx = temp3
-            Sy, Sx = temp2
-        Sy, Sx = temp
+                for c in [r[0] for r in cnts3 if r[1] == max([t[1] for t in cnts3])]:
+                    print("hi", a, b, c)
+                    routes.append( f"{a}{b}{c}" )
 
         routes.sort()
-        for d in list(routes[0]):
-            d = int(d)-1
+        print(f"route 총 개수는 {len(routes)}")
+        print(routes)
+        for r in routes:
+            temp = (Sy, Sx)
+            for d in r:
+                d = int(d) - 1
+                ny = Sy-1 + sdy[d]
+                nx = Sx-1 + sdx[d]
 
-            ny = Sy + sdy[d]
-            nx = Sx + sdx[d]
+                if not((0 <= ny < 4) and (0 <= nx < 4)):
+                    Sy, Sx = temp
+                    break
 
-            grid[ny][nx] = 0
-            smells.append((ny, nx, cnt))
+                if grid[ny][nx] != 0:
+                    smells.append((ny+1, nx+1, cnt))
 
+                    for i, f in enumerate(data):
+                        if f[0]-1 == ny and f[1]-1 == nx:
+                            del data[i]
+                            Sy, Sx = temp
+                            break
 
-        # for i in range(4):
-        #     for j in range(4):
-        #         for k in range(4):
-        #             for l in (i, j, k):
+                    grid[ny][nx] = 0
+                Sy, Sx = ny+1, nx+1
+                print(f"상어 이동함 {Sy}, {Sx}")
+            else:
+                print("일케 이동했음", r)
+                break
+        
+        # 복제 완료
+        l = len(data)
+        for i in range(len(data2)):
+            d = data2[i]
 
-        #                 ny = sdy[l]
-        #                 nx = sdx[l]
+            if d in data[:l]:
+                continue
 
-        # 복제 만들기
-        print(data)
-        print(data2)
+            grid[d[0]-1][d[1]-1] += 1
+            data.append(d)
 
+        print(f"마지막 상어 위치 : {Sy}, {Sx}")
+    print(f"기존 물고기 : {data2}")
+    print(f" 복제 완료 물고기 : {data}")
+    print(f"냄새 : {smells}")
     result = len(data)
 
     return result
@@ -112,6 +124,6 @@ def main(M, S, data, Sx, Sy):
 if __name__ == "__main__":
     M, S = tuple(map(int, input().split(" ")))
     data = [list(map(int, input().split(" "))) for _ in range(M)]
-    Sx, Sy = tuple(map(int, input().split(" ")))
+    Sy, Sx = tuple(map(int, input().split(" ")))
 
     print( main(M, S, data, Sx, Sy) )
