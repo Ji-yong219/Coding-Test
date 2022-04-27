@@ -42,35 +42,40 @@ def main(M, S, data, Sx, Sy):
         # 상어 이동
         routes = []
         cnts = []
+        print(f"zz1 : {Sy}, {Sx}")
         for d in range(4):
             ny = Sy + sdy[d]
             nx = Sx + sdx[d]
 
             if (0 <= ny < 4) and (0 <= nx < 4):
-                cnts.append((d+1, grid[ny][nx]))
+                cnts.append((d+1, grid[ny][nx], (ny, nx)))
             
-        print(f"zz : {[r[0] for r in cnts if r[1] == max([t[1] for t in cnts])]}")
+        print(f"zz1 : {[r[0] for r in cnts if r[1] == max([t[1] for t in cnts])]}")
         for a in [r[0] for r in cnts if r[1] == max([t[1] for t in cnts])]:
+            ny, nx = a[2]
             cnts2 = []
             for d2 in range(4):
-                ny2 = Sy + sdy[d2]
-                nx2 = Sx + sdx[d2]
+                ny = Sy + sdy[d2]
+                nx = Sx + sdx[d2]
 
-                if (0 <= ny2 < 4) and (0 <= nx2 < 4):
-                    cnts2.append((d2+1, grid[ny2][nx2]))
+                if (0 <= ny < 4) and (0 <= nx < 4):
+                    cnts2.append((d2+1, grid[ny][nx], (ny, nx)))
 
+            print(f"zz2: {[r[0] for r in cnts2 if r[1] == max([t[1] for t in cnts2])]}")
             for b in [r[0] for r in cnts2 if r[1] == max([t[1] for t in cnts2])]:
+                ny, nx = a[2]
                 cnts3 = []
                 for d3 in range(4):
-                    ny3 = Sy + sdy[d3]
-                    nx3 = Sx + sdx[d3]
+                    ny = Sy + sdy[d3]
+                    nx = Sx + sdx[d3]
 
-                    if (0 <= ny3 < 4) and (0 <= nx3 < 4):
-                        cnts3.append((d3+1, grid[ny3][nx3]))
+                    if (0 <= ny < 4) and (0 <= nx < 4):
+                        cnts3.append((d3+1, grid[ny][nx], (ny, nx)))
 
+                print(f"zz3 : {[r[0] for r in cnts3 if r[1] == max([t[1] for t in cnts3])]}")
                 for c in [r[0] for r in cnts3 if r[1] == max([t[1] for t in cnts3])]:
-                    print("hi", a, b, c)
-                    routes.append( f"{a}{b}{c}" )
+                    ny, nx = a[2]
+                    routes.append( f"{a[0]}{b[0]}{c[0]}" )
 
         routes.sort()
         print(f"route 총 개수는 {len(routes)}")
