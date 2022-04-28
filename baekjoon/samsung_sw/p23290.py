@@ -86,8 +86,6 @@ def move_fish(grid, copy, sy, sx, smells):
                                 print(grid[y][x], y, x, d)
                                 print(f"{grid[y][x]}가 된다\n\n")
                             break
-                    if y == 2 and x == 2:
-                        print_grid(grid, smells, sy, sx)
 
     return grid
 
