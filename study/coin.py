@@ -10,10 +10,19 @@ R = [1440, 11, 46, 74]
 
 def cal(r, cs, dp):
     result = 0
+
+    a = dp[r-1]
+    a = 0 if a == -1 else a
+
+    x = 1
+    cal(r - (x) , cs, dp)
+
+
     for e in  [r-c-1 for c in cs]:
         result += dp[e] if dp[e]>0 else 0
 
     dp[r-1] = result
+
 
 for cs, r in zip(coins, R):
     dp = [0] * r
