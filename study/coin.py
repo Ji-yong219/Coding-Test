@@ -22,6 +22,7 @@ def cal(r, cs, dp):
         result += dp[e] if dp[e]>0 else 0
 
     dp[r-1] = result
+    return min
 
 
 for cs, r in zip(coins, R):
