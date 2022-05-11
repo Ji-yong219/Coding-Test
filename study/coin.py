@@ -22,8 +22,12 @@ def cal(r, cs, dp):
         result += dp[e] if dp[e]>0 else 0
 
     dp[r-1] = result
+
+    temp = min(cal(r-1, cs, dp), cal(r-2, cs, dp), cal(r-3, cs, dp)) + 1
+    print(f"temp : {temp}")
     
-    return min(cal(r-1, cs, dp), cal(r-2, cs, dp), cal(r-3, cs, dp)) + 1
+    return temp
+    # return min(cal(r-1, cs, dp), cal(r-2, cs, dp), cal(r-3, cs, dp)) + 1
 
 
 for cs, r in zip(coins, R):
