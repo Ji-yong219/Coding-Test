@@ -9,8 +9,13 @@ def main(N, M, data):
         ((0, 1), (1, 0), (0, -1), (-1, 0))
     ]
 
-    print(N, M)
-    print(data)
+    for r in data:
+        for c in r:
+            print(c, end=" ")
+            if 0 < c < 6:
+                print(D[c-1])
+
+        print()
 
     return result
 

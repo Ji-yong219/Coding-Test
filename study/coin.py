@@ -46,5 +46,4 @@ for cs, r in zip(coins, R):
     dp[mn] = 1
 
     t = cal(r, cs, dp)
-    print(t)
-    # print(f"동전 {', '.join([str(c)+'원' for c in cs])} {len(cs)}개 중 {r}원을 만드는 데 필요한 최소 개수 : {t}개")
+    print(f"동전 {', '.join([str(c)+'원' for c in cs])} {len(cs)}개 중 {r}원을 만드는 데 필요한 최소 개수 : {t}개")
