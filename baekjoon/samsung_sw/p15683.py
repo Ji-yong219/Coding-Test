@@ -12,13 +12,13 @@ def main(N, M, data):
     for y in range(N):
         for x in range(M):
             c = data[y][x]
+
             if 0 < c < 6:
                 for i in range(4):
                     ny = y + D[c-1][i][0]
                     nx = x + D[c-1][i][1]
 
                     print(data[ny][nx])
-
         print()
 
     return result
