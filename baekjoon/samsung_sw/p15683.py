@@ -35,16 +35,16 @@ def main(N, M, data):
     print(f"CS : {CS}")
 
 
-                # for i in range(4):
-                #     ny = y + D[c-1][i][0]
-                #     nx = x + D[c-1][i][1]
+    for i in range(4):
+        ny = y + D[c-1][i][0]
+        nx = x + D[c-1][i][1]
 
-                    # while 0 <= ny < N and 0 <= nx < M and data[ny][nx] != 6:
-                    #     if data[ny][nx] == 0:
-                    #         data[ny][nx] = "#"
-                    #
-                    #     ny = ny + D[c-1][i][0]
-                    #     nx = nx + D[c-1][i][1]
+        while 0 <= ny < N and 0 <= nx < M and data[ny][nx] != 6:
+            if data[ny][nx] == 0:
+                data[ny][nx] = "#"
+
+            ny = ny + D[c-1][i][0]
+            nx = nx + D[c-1][i][1]
 
     for r in data:
         print(r)
