@@ -16,8 +16,6 @@ def main(N, M, data):
     ]
 
 
-
-
     for r in data:
         print(r)
     print("")
@@ -33,7 +31,6 @@ def main(N, M, data):
 
     CS = [[j for j in range(DC[i[2]])] for i in cams]
     print(f"CS : {CS}")
-
 
     for i in range(4):
         ny = y + D[c-1][i][0]
