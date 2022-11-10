@@ -7,10 +7,10 @@ int main(void) {
     int star_cnt = 0;
 
     printf("input : ");
-    scanf("%d, &count");
+    scanf("%d", &count);
 
     for (i = 1, star_cnt = 1; i <= count; i++, star_cnt += 2) {
-        for (j = count - star_cnt; j > 0; j--) {
+        for (j = count - star_cnt / 2 - 1; j > 0; j--) {
             printf(" ");
         }
 
