@@ -2,8 +2,8 @@ def main(N, AN, ON):
     result = 0
 
     oo = [1] * ON[0] + [2] * ON[1] + [3] * ON[2] + [4] * ON[3]
+    print(oo)
     operators = permutations(oo, N-1)
-
     mx = None
     mn = None
     for operator in operators:
@@ -35,7 +35,7 @@ def main(N, AN, ON):
 
 def permutations(arr, n):
     if n == 0:
-        yield [[]]
+        yield []
 
     for i, el in enumerate(arr):
         for p in permutations(arr[ :i] + arr[i+1: ], n-1):
